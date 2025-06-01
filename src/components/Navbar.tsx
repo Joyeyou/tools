@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, ClipboardList, Timer, Clock } from 'lucide-react'
+import { Home, ClipboardList, Timer, Clock, MessageSquare, Train } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 /**
@@ -56,6 +56,8 @@ export function Navbar() {
     { href: '/todo', icon: ClipboardList, label: '待办事项' },
     { href: '/timer', icon: Timer, label: '计时器' },
     { href: '/pomodoro', icon: Clock, label: '番茄钟' },
+    { href: '/review', icon: MessageSquare, label: '评论' },
+    { href: '/train', icon: Train, label: '火车票' },
   ]
 
   return (

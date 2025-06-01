@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
 	title: "实用工具集",
-	description: "一个包含待办事项、计时器和番茄钟的实用工具集",
+	description: "一个包含待办事项、计时器、番茄钟和评论生成器的实用工具集",
 	icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -33,6 +33,8 @@ export default function RootLayout({
 							<Link href="/todo" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">待办事项</Link>
 							<Link href="/timer" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">计时器</Link>
 							<Link href="/pomodoro" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">番茄钟</Link>
+							<Link href="/review" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">评论生成器</Link>
+							<Link href="/train" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">火车票查询</Link>
 						</nav>
 					</div>
 				</header>

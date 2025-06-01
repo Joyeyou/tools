@@ -1,7 +1,7 @@
 'use client'
 
 import { NavigationCard } from '@/components/ui/navigation-card'
-import { ClipboardList, Timer, Clock } from 'lucide-react'
+import { ClipboardList, Timer, Clock, MessageSquare, Train } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 /**
@@ -40,6 +40,20 @@ export default function HomePage() {
 			href: '/pomodoro',
 			icon: Clock,
 			color: 'bg-red-50 text-red-500'
+		},
+		{
+			title: '评论生成器',
+			description: '快速生成餐厅和酒店的评论',
+			href: '/review',
+			icon: MessageSquare,
+			color: 'bg-green-50 text-green-500'
+		},
+		{
+			title: '火车票查询',
+			description: '查询全国各地火车票信息',
+			href: '/train',
+			icon: Train,
+			color: 'bg-orange-50 text-orange-500'
 		},
 		// 未来可以在此添加更多工具
 	]
