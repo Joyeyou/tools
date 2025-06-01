@@ -1,17 +1,13 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useCounterStore } from '@/store/counter'
-import { Minus, Plus, RefreshCcw } from 'lucide-react'
+import { NavigationCard } from '@/components/ui/navigation-card'
+import { ClipboardList, Timer, Clock } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
 
 /**
- * @description 这只是个示例页面，你可以随意修改这个页面或进行全面重构
+ * @description 首页 - iOS风格简洁设计
  */
-export default function StartTemplatePage() {
-	const { count, increment, decrement, reset } = useCounterStore()
+export default function HomePage() {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
@@ -23,79 +19,52 @@ export default function StartTemplatePage() {
 		return () => clearTimeout(timer)
 	}, [])
 
-	const handleIncrement = () => {
-		const success = increment()
-		if (!success) {
-			toast.error('已达到最大值 (10)')
-		}
-	}
-
-	const handleDecrement = () => {
-		const success = decrement()
-		if (!success) {
-			toast.error('已达到最小值 (0)')
-		}
-	}
-
-	const handleReset = () => {
-		reset()
-		toast.success('计数器已重置为 0')
-	}
+	const tools = [
+		{
+			title: '待办事项',
+			description: '创建和管理您的待办事项列表',
+			href: '/todo',
+			icon: ClipboardList,
+			color: 'bg-blue-50 text-blue-500'
+		},
+		{
+			title: '计时器',
+			description: '简单易用的计时工具',
+			href: '/timer',
+			icon: Timer,
+			color: 'bg-purple-50 text-purple-500'
+		},
+		{
+			title: '番茄时钟',
+			description: '高效的专注与休息循环管理',
+			href: '/pomodoro',
+			icon: Clock,
+			color: 'bg-red-50 text-red-500'
+		},
+		// 未来可以在此添加更多工具
+	]
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-8">
-			
-			<div className="space-y-8 text-center">
-				<h1 className="font-medium text-2xl text-gray-900">
-
-					初始化模板
-				</h1>
+		<main className="min-h-screen flex flex-col bg-gray-50 px-4 py-6 pb-20 md:pb-8">
+			<section className="container mx-auto max-w-3xl">
+				<div className="mb-10 px-2">
+					<h1 className="text-2xl font-semibold text-gray-900">实用工具集</h1>
+					<p className="text-gray-500 mt-1">选择下面的工具开始使用</p>
+				</div>
 				
 				<div className="space-y-4">
-					<div className="flex h-16 items-center justify-center font-bold text-4xl text-gray-900">
-						{isLoading ? (
-							<Skeleton className="h-8 w-8 bg-gray-200" />
-						) : (
-							count
-						)}
-					</div>
-					
-					<div className="flex justify-center gap-4">
-						<Button 
-							onClick={handleDecrement}
-							variant="outline"
-							disabled={count === 0 || isLoading}
-						>
-							<Minus className="h-4 w-4 text-gray-600" />
-						</Button>
-						
-						<Button 
-							onClick={handleReset}
-							variant="outline"
-							disabled={isLoading}
-						>
-							<RefreshCcw className="h-4 w-4 text-gray-600" />
-						</Button>
-						
-						<Button 
-							onClick={handleIncrement}
-							variant="outline"
-							disabled={count === 10 || isLoading}
-						>
-							<Plus className="h-4 w-4 text-gray-600" />
-						</Button>
-					</div>
-					
-					<div className="flex flex-col gap-2">
-						<p className="text-gray-600 text-sm">
-							玩玩看 👆 这只是个演示
-						</p>
-						<p className="text-gray-500 text-sm">
-							范围: 0-10 | 自动保存到浏览器本地
-						</p>
-					</div>
+					{tools.map((tool) => (
+						<NavigationCard
+							key={tool.href}
+							title={tool.title}
+							description={tool.description}
+							href={tool.href}
+							icon={tool.icon}
+							color={tool.color}
+						/>
+					))}
 				</div>
-			</div>
+			</section>
 		</main>
 	)
 }
