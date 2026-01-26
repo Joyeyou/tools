@@ -13,6 +13,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- 认证检查 - 必须在页面渲染前执行 -->
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        // 立即检查登录状态，未登录则重定向
+        if (!Auth.isLoggedIn()) {
+            window.location.href = '/login.html';
+        }
+    </script>
+
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -405,11 +414,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    <script src="../../assets/js/auth.js"></script>
-    <script>
-        // 检查登录状态
-        Auth.requireLogin();
-    </script>
     <script src="gaokao-vocab.js"></script>
     <script src="dictionary.js"></script>
     <script src="app.js"></script>
