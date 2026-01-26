@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线工具集</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* 渐变背景动画 */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        /* 工具卡片悬停效果 */
+        .tool-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl sm:text-6xl font-heading font-bold mb-4">
+                    🛠️ 在线工具集
+                </h1>
+                <p class="text-xl sm:text-2xl text-white/90 mb-6">
+                    简单、高效、实用的在线工具
+                </p>
+                <div class="flex items-center justify-center gap-4">
+                    <p class="text-lg text-white/80">
+                        让工作和学习更轻松
+                    </p>
+                    <button
+                        id="logoutBtn"
+                        class="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-lg transition-colors duration-200 text-sm flex items-center gap-2"
+                        title="退出登录"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        <span>退出</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Tools Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- 英语学习工具 -->
+            <a href="tools/english-learning/index.html" class="tool-card block bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden group">
+                <div class="bg-gradient-to-br from-indigo-500 to-purple-600 p-8 text-white">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <span class="text-4xl">📚</span>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold mb-2">英语学习工具</h3>
+                    <p class="text-white/90 text-sm">English Learning Tool</p>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        专为高考学生设计的英语词汇学习工具。支持批量查词、单词本管理、艾宾浩斯复习系统。
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-semibold">批量查词</span>
+                        <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-semibold">单词本</span>
+                        <span class="px-3 py-1 bg-pink-50 text-pink-700 rounded-full text-xs font-semibold">高考考纲</span>
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold">PDF导出</span>
+                    </div>
+                    <div class="flex items-center text-indigo-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
+                        <span>开始学习</span>
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- HTML 预览工具 -->
+            <a href="tools/html-preview/index.html" class="tool-card block bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden group">
+                <div class="bg-gradient-to-br from-orange-500 to-red-600 p-8 text-white">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <span class="text-4xl">💻</span>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold mb-2">HTML 预览工具</h3>
+                    <p class="text-white/90 text-sm">HTML Preview Tool</p>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        在线编辑和预览 HTML/CSS/JavaScript 代码。实时预览、代码高亮、快速调试。
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs font-semibold">实时预览</span>
+                        <span class="px-3 py-1 bg-red-50 text-red-700 rounded-full text-xs font-semibold">代码编辑</span>
+                        <span class="px-3 py-1 bg-yellow-50 text-yellow-700 rounded-full text-xs font-semibold">快速调试</span>
+                    </div>
+                    <div class="flex items-center text-orange-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
+                        <span>开始使用</span>
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 更多工具即将推出 -->
+            <div class="tool-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-dashed border-gray-300">
+                <div class="bg-gradient-to-br from-gray-400 to-gray-500 p-8 text-white">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
+                        <span class="text-4xl">✨</span>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold mb-2">更多工具</h3>
+                    <p class="text-white/90 text-sm">Coming Soon...</p>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        我们正在开发更多实用工具。如果您有好的建议，欢迎反馈！
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-semibold">敬请期待</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Features Section -->
+        <div class="mt-20 bg-white rounded-2xl shadow-lg p-8 sm:p-12">
+            <h2 class="text-3xl font-heading font-bold text-center mb-12 text-gray-800">
+                为什么选择我们的工具？
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-heading font-semibold mb-2">快速高效</h3>
+                    <p class="text-gray-600">无需安装，打开即用，极速响应</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-heading font-semibold mb-2">安全可靠</h3>
+                    <p class="text-gray-600">本地存储，数据安全，隐私保护</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-heading font-semibold mb-2">完全免费</h3>
+                    <p class="text-gray-600">所有工具永久免费，无广告</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-20 py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-heading font-bold mb-4">在线工具集</h3>
+                <p class="text-gray-400 mb-6">
+                    专注于提供简单、高效、实用的在线工具
+                </p>
+                <p class="text-gray-500 text-sm">
+                    © <span id="currentYear"></span> 在线工具集. 仅供授权用户使用.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/auth.js"></script>
+    <script>
+        // 检查登录状态
+        Auth.requireLogin();
+
+        // 动态显示当前年份
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // 登出按钮
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('确定要退出登录吗？')) {
+                Auth.logout();
+            }
+        });
+    </script>
+</body>
+</html>
