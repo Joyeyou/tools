@@ -1,15 +1,22 @@
 /**
  * 认证系统
  * 提供登录、登出、权限检查等功能
+ *
+ * ⚠️ 安全警告 ⚠️
+ * 1. 这是前端认证系统，仅适用于私人使用或内部工具
+ * 2. 部署到生产环境前，请务必修改默认密码
+ * 3. 如需公开部署，建议使用后端认证系统
+ * 4. 请勿将此文件中的密码分享到公共平台
  */
 
 const Auth = {
     // 配置
     config: {
-        // 用户列表（实际使用时建议改为更安全的方式）
+        // 用户列表
+        // ⚠️ 重要：部署前请修改默认密码！
         users: [
-            { username: 'admin', password: 'admin123' },
-            { username: 'eyou', password: 'eyou2026' }
+            { username: 'admin', password: 'admin123' },  // 请修改此密码
+            { username: 'eyou', password: 'eyou2026' }    // 请修改此密码
         ],
         storageKey: 'auth_token',
         expiryKey: 'auth_expiry'

@@ -818,5 +818,10 @@ class HTMLPreviewTool {
 
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
+    // 输出版本信息到控制台
+    console.log('%c🛠️ HTML 预览工具 v2.0.0', 'color: #667eea; font-size: 16px; font-weight: bold;');
+    console.log('%c✨ 功能：实时预览 | 代码格式化 | 模板库 | 响应式预览 | 全屏模式', 'color: #666; font-size: 12px;');
+    console.log('%c📅 更新日期：2026-01-28', 'color: #666; font-size: 12px;');
+
     new HTMLPreviewTool();
 });
