@@ -18,13 +18,20 @@
     <script>
         // 立即检查登录状态，未登录则重定向
         if (!Auth.isLoggedIn()) {
-            window.location.href = '/login.html';
+            window.location.replace('/login.html');
         }
     </script>
 
     <style>
+        /* 防止页面闪烁 - 默认隐藏页面内容 */
         body {
             font-family: 'Inter', sans-serif;
+            visibility: hidden;
+        }
+
+        /* 认证通过后显示 */
+        body.auth-verified {
+            visibility: visible;
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
@@ -249,6 +256,9 @@
     </footer>
 
     <script>
+        // 认证通过，显示页面
+        document.body.classList.add('auth-verified');
+
         // 动态显示当前年份
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 

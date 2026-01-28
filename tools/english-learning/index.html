@@ -18,13 +18,20 @@
     <script>
         // 立即检查登录状态，未登录则重定向
         if (!Auth.isLoggedIn()) {
-            window.location.href = '/login.html';
+            window.location.replace('/login.html');
         }
     </script>
 
     <style>
+        /* 防止页面闪烁 - 默认隐藏页面内容 */
         body {
             font-family: 'Open Sans', sans-serif;
+            visibility: hidden;
+        }
+
+        /* 认证通过后显示 */
+        body.auth-verified {
+            visibility: visible;
         }
         h1, h2, h3, h4, h5, h6, .heading {
             font-family: 'Poppins', sans-serif;
@@ -415,6 +422,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script src="gaokao-vocab.js"></script>
+    <script>
+        // 认证通过，显示页面
+        document.body.classList.add('auth-verified');
+    </script>
     <script src="dictionary.js"></script>
     <script src="app.js"></script>
     <script src="notebook.js"></script>
