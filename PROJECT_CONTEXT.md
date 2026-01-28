@@ -8,7 +8,7 @@
 
 ### 基本信息
 - **项目名称**: 在线工具集 (Tool.eyou.ai)
-- **当前版本**: v2.0.0 (2026-01-28)
+- **当前版本**: v2.0.9 (2026-01-29)
 - **项目类型**: 纯静态网站，包含多个在线工具
 - **技术栈**: HTML + JavaScript + Tailwind CSS
 - **项目路径**: `/Users/macmini/tool.eyou.ai`
@@ -30,7 +30,13 @@
 tool.eyou.ai/
 ├── index.html              # 首页（工具导航）
 ├── login.html             # 登录页面
+├── test.html              # 测试页面（用于验证部署）
 ├── start.sh               # 快速启动脚本
+├── package.json           # 项目配置 ⭐ Vercel 必需
+├── vercel.json            # Vercel 部署配置 ⭐ 必需
+├── .vercelignore          # Vercel 忽略文件
+├── netlify.toml           # Netlify 备用配置
+├── version.json           # 版本信息
 ├── assets/
 │   └── js/
 │       └── auth.js        # 认证系统
@@ -47,6 +53,7 @@ tool.eyou.ai/
 ├── DEPLOYMENT.md          # 部署指南
 ├── CHANGELOG.md           # 更新日志
 ├── README.md             # 项目说明
+├── SECURITY.md           # 安全配置指南
 └── PROJECT_CONTEXT.md    # 本文档（项目上下文）
 ```
 
@@ -268,6 +275,69 @@ git push origin main
 
 ## 📅 开发历史
 
+### 2026-01-29 - 部署配置修复 ⭐ 重要
+
+#### 🐛 重大问题：Vercel 部署 404 错误
+
+**问题描述**：
+- 在 2026-01-28 重建 Vercel 项目后
+- 所有页面返回 404 NOT_FOUND 错误
+- 即使 Vercel 显示部署成功（Status: Ready）
+- commit 号正确，但文件无法访问
+
+**排查过程**：
+1. ✅ 确认 GitHub 代码正确
+2. ✅ 确认 Vercel 部署成功
+3. ✅ 确认 Root Directory 为空（正确）
+4. ✅ 确认 Framework Preset 为 "Other"
+5. ✅ 确认 Build Command 和 Output Directory 关闭
+6. ❌ 但页面仍然 404
+
+**根本原因**：
+- 项目缺少 `package.json` 文件
+- Vercel 无法识别纯静态 HTML 项目类型
+- 缺少 `vercel.json` 配置，未指定静态文件处理器
+
+**解决方案**：
+1. 创建 `package.json` (commit 3a2e94f)
+2. 创建 `vercel.json` 配置静态文件构建器 (commit 20e1160)
+3. 推送到 GitHub 自动部署
+4. 网站恢复正常（HTTP 200）
+
+**经验教训**：
+- ✅ Vercel 对纯静态 HTML 项目支持不友好
+- ✅ 必须有 `package.json` 和 `vercel.json` 两个配置文件
+- ✅ 新项目开始时就应该配置好部署文件
+- ✅ 提前告知部署平台，Claude 会自动准备配置
+
+**相关 Commits**：
+- `64ad778` - 添加 vercel.json 配置文件
+- `3a2e94f` - 添加 package.json，确保 Vercel 正确识别静态站点 ✅
+- `20e1160` - 配置 Vercel 静态文件构建器 ✅ 问题解决
+
+**最终配置**：
+```json
+// package.json
+{
+  "name": "tool-eyou-ai",
+  "version": "2.0.9",
+  "description": "在线工具集合",
+  "private": true
+}
+
+// vercel.json
+{
+  "version": 2,
+  "builds": [
+    { "src": "**/*.html", "use": "@vercel/static" },
+    { "src": "**/*.css", "use": "@vercel/static" },
+    { "src": "**/*.js", "use": "@vercel/static" }
+  ]
+}
+```
+
+---
+
 ### 2026-01-28 - 重大更新
 
 #### ✨ 新增功能
@@ -348,11 +418,62 @@ git push origin main
 - **自动部署**: ✅ 已配置
 
 ### Vercel 部署
+
+#### 基本信息
 - **平台**: Vercel
 - **项目名称**: tools
 - **生产地址**: https://tool.eyou.ai
 - **自动部署**: ✅ GitHub main 分支推送时自动部署
 - **部署时间**: 通常 1-3 分钟
+
+#### 必需的配置文件 ⭐ 重要
+
+对于**纯静态 HTML 项目**，Vercel 需要以下配置文件才能正确部署：
+
+**1. `package.json`** - 让 Vercel 识别项目类型
+```json
+{
+  "name": "tool-eyou-ai",
+  "version": "2.0.9",
+  "description": "在线工具集合",
+  "private": true
+}
+```
+
+**2. `vercel.json`** - 明确指定静态文件处理
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.js",
+      "use": "@vercel/static"
+    }
+  ]
+}
+```
+
+**⚠️ 注意**：这两个文件缺一不可！没有它们会导致 404 错误。
+
+#### Vercel 项目设置
+
+在 Vercel 控制台的 **Settings → General → Build & Development Settings** 中：
+
+```
+✅ Framework Preset: Other
+✅ Build Command: (留空 - 关闭 Override)
+✅ Output Directory: (留空 - 关闭 Override)
+✅ Install Command: (留空 - 关闭 Override)
+✅ Root Directory: (留空)
+```
 
 ### 部署流程
 1. 本地修改代码
@@ -365,6 +486,14 @@ git push origin main
 - 访问 https://vercel.com
 - 进入 `tools` 项目
 - 查看 "Deployments" 标签页
+- 点击最新部署查看详细日志
+
+### 备用部署方案 - Netlify
+
+如果 Vercel 出现问题，可以使用 Netlify 作为备用方案：
+- 项目已包含 `netlify.toml` 配置文件
+- Netlify 对纯静态 HTML 更友好
+- 拖拽文件夹即可部署，无需复杂配置
 
 ---
 
@@ -446,6 +575,68 @@ git diff commit1 commit2
    - 重要修改前先提交当前版本
    - 使用有意义的提交信息
 
+### 🎯 新项目部署最佳实践 ⭐ 重要
+
+**在项目开始时就告知部署平台！**
+
+每次创建新项目时，请在一开始就说明：
+```
+"这个项目最终要部署到 Vercel"
+```
+
+或者
+
+```
+"这是一个静态 HTML 项目，要部署到 Vercel"
+```
+
+#### Claude 会自动为你准备的配置
+
+根据项目类型和部署平台，Claude 会自动创建必需的配置文件：
+
+**纯静态 HTML 项目 → Vercel**：
+```
+✅ package.json          - 项目基本信息
+✅ vercel.json           - Vercel 静态文件配置
+✅ .vercelignore         - 忽略文件配置
+```
+
+**Next.js / React / Vue 项目 → Vercel**：
+```
+✅ package.json          - 包含依赖和构建脚本
+✅ vercel.json           - 路由、重定向配置
+✅ .env.example          - 环境变量模板
+```
+
+**纯静态 HTML 项目 → Netlify**：
+```
+✅ netlify.toml          - Netlify 配置
+✅ _redirects            - 路由重定向
+```
+
+**纯静态 HTML 项目 → Cloudflare Pages**：
+```
+✅ wrangler.toml         - Cloudflare 配置
+✅ _redirects            - 路由配置
+```
+
+#### 为什么这很重要？
+
+- ✅ **避免部署时出现 404 错误**
+- ✅ **避免反复调试配置问题**
+- ✅ **节省时间，一次配置成功**
+- ✅ **确保项目结构完整**
+
+#### 如果忘记提前配置怎么办？
+
+不用担心！按照"问题排查"部分的"问题4"解决方案操作即可：
+1. 添加 `package.json`
+2. 添加 `vercel.json`
+3. 推送到 GitHub
+4. 等待重新部署
+
+但**提前配置**可以避免这些问题！
+
 ---
 
 ## 📞 问题排查
@@ -488,16 +679,98 @@ git pull origin main
 git push origin main
 ```
 
-### 问题4：Vercel 部署失败
+### 问题4：Vercel 部署后出现 404 NOT_FOUND ⭐ 重要
+
+**症状**：
+- Vercel 显示部署成功（Status: Ready）
+- 访问任何页面都返回 404 错误
+- 错误信息：`The page could not be found NOT_FOUND`
+
+**根本原因**：
+- **缺少 `package.json` 文件** - Vercel 无法识别项目类型
+- **缺少正确的 `vercel.json` 配置** - 没有指定静态文件处理器
+- Vercel 主要为构建型项目设计，对纯静态 HTML 站点支持不友好
+
+**完整解决方案**：
+
+**步骤1：创建 `package.json`**
+```bash
+cd /Users/macmini/tool.eyou.ai
+cat > package.json << 'EOF'
+{
+  "name": "tool-eyou-ai",
+  "version": "2.0.9",
+  "description": "在线工具集合",
+  "private": true
+}
+EOF
+```
+
+**步骤2：创建 `vercel.json`**
+```bash
+cat > vercel.json << 'EOF'
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.js",
+      "use": "@vercel/static"
+    }
+  ]
+}
+EOF
+```
+
+**步骤3：推送到 GitHub**
+```bash
+git add package.json vercel.json
+git commit -m "添加 Vercel 必需配置文件"
+git push origin main
+```
+
+**步骤4：等待部署**
+- 等待 1-2 分钟
+- 访问 https://tool.eyou.ai/test.html 测试
+- 应该能正常访问（HTTP 200）
+
+**预防措施**：
+- ✅ 保留 `package.json` 和 `vercel.json` 在仓库中
+- ✅ 不要删除或修改这两个文件
+- ✅ 新项目开始前告知部署平台，提前配置
+
+### 问题5：Vercel 自动部署不工作
+
 **可能原因**：
-- 代码错误
-- 构建失败
-- Vercel 配置问题
+- GitHub 连接断开
+- Webhook 失效
+- Vercel 项目设置错误
 
 **解决方法**：
-1. 访问 Vercel 控制台查看错误日志
-2. 检查代码语法错误
-3. 回滚到上一个工作版本
+1. 进入 Vercel **Settings → Git**
+2. 检查 GitHub 连接状态
+3. 点击 **Disconnect** 然后重新连接
+4. 或者在 **Deployments** 页面手动点击 **Redeploy**
+
+### 问题6：Vercel 部署成功但显示旧版本
+
+**可能原因**：
+- 浏览器缓存
+- CDN 缓存未刷新
+- 部署的不是最新 commit
+
+**解决方法**：
+1. 硬刷新浏览器（Ctrl/Cmd + Shift + R）
+2. 检查 Vercel Deployments 页面的 commit 号
+3. 确认是否为最新的 commit
+4. 检查 GitHub 是否推送成功：`git log --oneline -5`
 
 ---
 
@@ -562,11 +835,13 @@ Claude 会快速了解：
 
 ---
 
-**文档最后更新**: 2026-01-28 21:00
-**文档版本**: v2.0
-**项目版本**: v2.0.0
+**文档最后更新**: 2026-01-29 01:10
+**文档版本**: v2.1
+**项目版本**: v2.0.9
 **维护者**: Claude Sonnet 4.5
 
 ---
 
 > 💡 提示：每次重大更新后，记得更新此文档的"开发历史"部分
+>
+> 🎯 新项目开始时，请告知 Claude 部署平台，自动准备配置文件！
