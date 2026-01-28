@@ -40,3 +40,7 @@ yarn-error.log*
 # Temporary files
 *.tmp
 *.temp
+
+# 内部文档（不公开）
+PROJECT_CONTEXT.md
+CLAUDE.md
